@@ -40,12 +40,8 @@ class DungeonsCmd : CommandExecutor {
                 player.sendMessage("Please specify the entity type (e.g., /dungeons addSource Zombie)")
                 return true
             }
-            val entityTypeString = args[1].toUpperCase()
-            val entityType: EntityType = try {
-                EntityType.valueOf(entityTypeString)
-            } catch (e: IllegalArgumentException) {
-                EntityType.ZOMBIE // Defaulting to ZOMBIE if the type is invalid
-            }
+
+            val entityType: EntityType = args[1].toEntityTypeOrElse(EntityType.ZOMBIE)
 
             val roundedX = player.location.blockX.toDouble()
             val roundedY = player.location.blockY.toDouble()
@@ -66,6 +62,8 @@ class DungeonsCmd : CommandExecutor {
 
 
     private fun saveUpdatedSpawnersToConfig() {
+        // TODO Using GSON Might be easier here? - Penguin
+
         val config = ConfigManager.config
 
         // Clear the existing 'Spawn-Point' section in the config
@@ -86,22 +84,10 @@ class DungeonsCmd : CommandExecutor {
         Dungeons().reloadConfig()
     }
 
-    private fun findClosestLocation(playerLocation: Location, locations: MutableSet<Location>): Location? {
-        var closestLocation: Location? = null
-        var minDistanceSquared = 25.0
+    private fun findClosestLocation(playerLocation: Location, locations: MutableSet<Location>) = locations.minBy {
+        it.distanceSquared(playerLocation)
+    }.takeIf { it.distanceSquared(playerLocation) <= 25 }
 
-        for (location in locations) {
-            // Calculate the squared distance (faster than calculating the actual distance)
-            val distanceSquared = playerLocation.distanceSquared(location)
-
-            // Check if the location is within the specified radius
-            if (distanceSquared <= minDistanceSquared) {
-                closestLocation = location
-                minDistanceSquared = distanceSquared
-            }
-        }
-
-        return closestLocation
-    }
+    private fun String.toEntityTypeOrElse(default: EntityType) = runCatching { EntityType.valueOf(uppercase()) }.getOrElse { default }
 
 }
