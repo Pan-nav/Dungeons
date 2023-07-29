@@ -2,6 +2,7 @@ package com.tokyo.dungeons.commands
 
 import com.tokyo.dungeons.ConfigManager
 import com.tokyo.dungeons.Dungeons
+import com.tokyo.dungeons.toEntityTypeOrElse
 import org.bukkit.Location
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
@@ -87,7 +88,5 @@ class DungeonsCmd : CommandExecutor {
     private fun findClosestLocation(playerLocation: Location, locations: MutableSet<Location>) = locations.minBy {
         it.distanceSquared(playerLocation)
     }.takeIf { it.distanceSquared(playerLocation) <= 25 }
-
-    private fun String.toEntityTypeOrElse(default: EntityType) = runCatching { EntityType.valueOf(uppercase()) }.getOrElse { default }
 
 }

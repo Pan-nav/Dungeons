@@ -30,14 +30,9 @@ class ConfigManager {
                     val spawnerEntry = spawnPointSection.getConfigurationSection(key)
                     val location = parseSpawnerLocation(spawnerEntry)
 
-                    val entityTypeString = spawnerEntry?.getString("type")?.toUpperCase()
-                    val entityType: EntityType = try {
-                        EntityType.valueOf(entityTypeString!!)
-                    } catch (e: IllegalArgumentException) {
-                        EntityType.ZOMBIE // Defaulting to ZOMBIE if the type is invalid
-                    }
+                    val entityType = spawnerEntry?.getString("type")?.toEntityTypeOrElse(EntityType.ZOMBIE)
 
-                    spawners[location!!] = entityType
+                    spawners[location!!] = entityType!!
                 }
 
             }
