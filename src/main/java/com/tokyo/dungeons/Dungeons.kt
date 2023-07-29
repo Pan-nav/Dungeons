@@ -5,8 +5,15 @@ import org.bukkit.plugin.java.JavaPlugin
 
 class Dungeons : JavaPlugin() {
 
+    companion object {
+        lateinit var instance: Dungeons
+    }
+
     override fun onEnable() {
-        ConfigManager.setupConfig(this)
+        instance = this
+
+        ConfigManager
+
         getCommand("dungeons")?.setExecutor(DungeonsCmd())
     }
 
