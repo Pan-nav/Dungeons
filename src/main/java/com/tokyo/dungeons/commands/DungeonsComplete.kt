@@ -19,7 +19,6 @@ class DungeonsComplete : TabCompleter {
         } else if (args?.size == 2){
             val results : MutableList<String> = mutableListOf()
 
-            results.add("Random")
             for (entityType in EntityType.values()){
                 results.add(entityType.name)
             }
