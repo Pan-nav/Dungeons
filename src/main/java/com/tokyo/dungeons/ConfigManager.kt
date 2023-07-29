@@ -1,62 +1,41 @@
 package com.tokyo.dungeons
 
-import org.bukkit.Bukkit
-import org.bukkit.Location
-import org.bukkit.configuration.ConfigurationSection
-import org.bukkit.configuration.file.FileConfiguration
-import org.bukkit.entity.EntityType
+import com.google.gson.Gson
+import com.google.gson.JsonSyntaxException
+import com.google.gson.reflect.TypeToken
+import com.tokyo.dungeons.serialisation.Dungeon
+import java.io.File
 
 
-class ConfigManager {
+object ConfigManager {
 
-    companion object{
-        lateinit var config : FileConfiguration
-        lateinit var spawners : HashMap<Location, EntityType>
-
-        fun setupConfig(plugin : Dungeons){
-            config = plugin.config
-            plugin.saveDefaultConfig()
-
-            spawners = loadSpawners()
-        }
-
-        private fun loadSpawners() : HashMap<Location, EntityType>{
-
-            val spawners : HashMap<Location, EntityType> = hashMapOf()
-            val spawnPointSection = config.getConfigurationSection("Spawn-Point")
-
-            if (spawnPointSection != null) {
-                for (key in spawnPointSection.getKeys(false)) {
-                    val spawnerEntry = spawnPointSection.getConfigurationSection(key)
-                    val location = parseSpawnerLocation(spawnerEntry)
-
-                    val entityTypeString = spawnerEntry?.getString("type")?.toUpperCase()
-                    val entityType: EntityType = try {
-                        EntityType.valueOf(entityTypeString!!)
-                    } catch (e: IllegalArgumentException) {
-                        EntityType.ZOMBIE // Defaulting to ZOMBIE if the type is invalid
-                    }
-
-                    spawners[location!!] = entityType
-                }
-
+    val file = File(Dungeons.instance.dataFolder, "Dungeons.json").also {
+        it.runCatching {
+            if (!exists()) {
+                parentFile.mkdirs()
+                createNewFile()
             }
-            return spawners
-        }
+        }.onFailure { ex -> ex.printStackTrace() }
+    }
 
-        private fun parseSpawnerLocation(entry: ConfigurationSection?): Location? {
-            val worldName = entry?.getString("world")
-            val x = entry?.getDouble("x")
-            val y = entry?.getDouble("y")
-            val z = entry?.getDouble("z")
+    val gson = Gson().newBuilder().setPrettyPrinting().create()
+    val type = object: TypeToken<ArrayList<Dungeon>>() {}.type
 
-            val world = Bukkit.getWorld(worldName!!)
-                ?: // Invalid spawner entry, return null or handle the error as needed
-                return null
-
-            return Location(world, x!!, y!!, z!!)
+    val dungeons: ArrayList<Dungeon> = file.reader().use {
+        try {
+            gson.fromJson(it, type)
+        } catch (e: JsonSyntaxException) {
+            Dungeons.instance.logger.severe("Failed to load dungeons from file, If this is the first time loading, this is expected, if not, there is an error in your config")
+            e.printStackTrace()
+            arrayListOf(Dungeon(arrayListOf()))
         }
     }
 
+    fun saveDungeons() = file.writer().use { gson.toJson(dungeons, type, it) }
+
+    /**
+     * Temporary method until support for multiple dungeons is added.
+     */
+    fun getDungeon() = dungeons[0]
 
 }
