@@ -1,6 +1,7 @@
 package com.tokyo.dungeons
 
 import com.tokyo.dungeons.commands.DungeonsCmd
+import com.tokyo.dungeons.managers.DungeonManager
 import org.bukkit.plugin.java.JavaPlugin
 
 class Dungeons : JavaPlugin() {
@@ -12,7 +13,7 @@ class Dungeons : JavaPlugin() {
     override fun onEnable() {
         instance = this
 
-        ConfigManager
+        DungeonManager
 
         getCommand("dungeons")?.setExecutor(DungeonsCmd())
     }

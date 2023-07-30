@@ -1,15 +1,1 @@
-#The spawn point for the mobs, and the mob that they spawn.
-Spawn-Point:
-  1:
-    world: 'World'
-    x: 60
-    y: 60
-    z: 60
-    type: 'Zombie'
-  2:
-    world: 'World'
-    x: 65
-    y: 65
-    z: 65
-    type: 'Skeleton'
-
+Dungeon-World: 'Dungeon'

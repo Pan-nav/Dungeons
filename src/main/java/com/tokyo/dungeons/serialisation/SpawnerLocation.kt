@@ -11,6 +11,6 @@ data class SpawnerLocation(
     val type: EntityType
 ) {
 
-    fun getLocation(world: World) = Location(world, x.toDouble(), y.toDouble(), z.toDouble())
+    fun getLocation(world: World?) = Location(world, x.toDouble(), y.toDouble(), z.toDouble())
 
 }

@@ -16,7 +16,7 @@ class DungeonsComplete : TabCompleter {
 
     override fun onTabComplete(sender: CommandSender, command: Command,label: String,args: Array<out String>?): List<String> {
         if (args?.size == 1){
-            return StringUtil.copyPartialMatches(args[0], listOf("addSource", "removeSource"), ArrayList())
+            return StringUtil.copyPartialMatches(args[0], listOf("addSource", "removeSource", "startDungeon", "stopDungeon"), ArrayList())
         } else if (args?.size == 2){
             return StringUtil.copyPartialMatches(args[1], entityNames, ArrayList())
         }
