@@ -17,7 +17,8 @@ data class SpawnerLocation(
         fun Location.toSpawnerLocation(type: EntityType) = SpawnerLocation(blockX, blockY, blockZ, type)
     }
 
-    fun getLocation(world: World) = Location(world, x.toDouble(), y.toDouble(), z.toDouble())
+    fun getLocation(world: World?) = Location(world, x.toDouble(), y.toDouble(), z.toDouble())
     fun getDistanceSquared(to: Location): Double = (to.x-x).pow(2) + (to.y-y).pow(2) + (to.z-z).pow(2)
     fun getDistanceSquared(to: SpawnerLocation): Int = (to.x-x).pow(2) + (to.y-y).pow(2) + (to.z-z).pow(2)
+
 }
