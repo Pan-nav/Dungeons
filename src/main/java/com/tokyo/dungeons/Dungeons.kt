@@ -1,7 +1,10 @@
 package com.tokyo.dungeons
 
 import com.tokyo.dungeons.commands.DungeonsCmd
+import com.tokyo.dungeons.events.EntityKill
 import com.tokyo.dungeons.managers.DungeonManager
+import org.bukkit.Bukkit
+import org.bukkit.event.Listener
 import org.bukkit.plugin.java.JavaPlugin
 
 class Dungeons : JavaPlugin() {
@@ -16,6 +19,10 @@ class Dungeons : JavaPlugin() {
         DungeonManager
 
         getCommand("dungeons")?.setExecutor(DungeonsCmd())
+
+        EntityKill().register()
     }
+
+    private fun Listener.register() = Bukkit.getPluginManager().registerEvents(this, this@Dungeons)
 
 }
