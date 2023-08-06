@@ -7,10 +7,11 @@ object ConfigManager {
 
     lateinit var config: FileConfiguration
 
+    // TODO might wanna run this! :D
     fun setupConfig(){
         config = Dungeons.instance.config
         Dungeons.instance.saveDefaultConfig()
     }
 
-    fun getDungeonsWorld(): String? {return config.getString("Dungeon-World")}
+    fun getDungeonsWorld() = config.getString("Dungeon-World")
 }
