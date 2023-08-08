@@ -1,7 +1,7 @@
 package com.tokyo.dungeons.commands
 
 import com.tokyo.dungeons.Dungeons
-import com.tokyo.dungeons.Runnable
+import com.tokyo.dungeons.runnables.Spawner
 import com.tokyo.dungeons.managers.DungeonManager
 import com.tokyo.dungeons.toEntityTypeOrElse
 import org.bukkit.command.Command
@@ -51,9 +51,9 @@ class DungeonsCmd : CommandExecutor {
             }
 
             "startDungeon" -> {
-                Runnable.runTaskTimer(Dungeons.instance, 0, 100)}
+                Spawner.runTaskTimer(Dungeons.instance, 0, 100)}
             "stopDungeon"  -> {
-                Runnable.cancel()}
+                Spawner.cancel()}
             else -> {player.sendMessage("Please follow the format: /dungeons <addSource|removeSource|startDungeon|stopDungeon> [entityType]")}
         }
 
