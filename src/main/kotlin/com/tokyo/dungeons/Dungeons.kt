@@ -3,7 +3,7 @@ package com.tokyo.dungeons
 import com.tokyo.dungeons.commands.DungeonsCmd
 import com.tokyo.dungeons.database.MySQL
 import com.tokyo.dungeons.events.EntityKill
-import com.tokyo.dungeons.managers.ConfigManager
+import com.tokyo.dungeons.managers.Config
 import com.tokyo.dungeons.managers.DungeonManager
 import org.bukkit.Bukkit
 import org.bukkit.NamespacedKey
@@ -25,7 +25,7 @@ class Dungeons : JavaPlugin() {
         instance = this
 
         DungeonManager
-        ConfigManager.setupConfig()
+        Config.init(this)
         database()
 
         getCommand("dungeons")?.setExecutor(DungeonsCmd())

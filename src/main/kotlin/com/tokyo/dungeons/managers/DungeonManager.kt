@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.google.gson.reflect.TypeToken
 import com.tokyo.dungeons.Dungeons
+import com.tokyo.dungeons.GSON
 import com.tokyo.dungeons.serialisation.Dungeon
 import java.io.File
 
@@ -19,12 +20,9 @@ object DungeonManager {
         }.onFailure { ex -> ex.printStackTrace() }
     }
 
-    val gson = Gson().newBuilder().setPrettyPrinting().create()
-    val type = object: TypeToken<ArrayList<Dungeon>>() {}.type
-
     val dungeons: ArrayList<Dungeon> = file.reader().use {
         try {
-            gson.fromJson(it, type)
+            GSON.fromJson(it, ArrayList<Dungeon>()::class.java)
         } catch (e: JsonSyntaxException) {
             Dungeons.instance.logger.severe("Failed to load dungeons from file, If this is the first time loading, this is expected, if not, there is an error in your config")
             e.printStackTrace()
@@ -32,7 +30,7 @@ object DungeonManager {
         }
     }
 
-    fun saveDungeons() = file.writer().use { gson.toJson(dungeons, type, it) }
+    fun saveDungeons() = file.writer().use { GSON.toJson(dungeons, it) }
 
     /**
      * Temporary method until support for multiple dungeons is added.
