@@ -1,9 +1,9 @@
-Dungeon-World: 'Dungeon'
+dungeon-world: 'Dungeon'
 
 #MySQL database
-MYSQL:
-  HOST: "localhost"
-  PORT: 3306
-  USERNAME: "root"
-  DATABASE: "waffles"
-  PASS: ""
+mysql:
+  host: "localhost"
+  port: 3306
+  username: "root"
+  database: "waffles"
+  pass: ""
