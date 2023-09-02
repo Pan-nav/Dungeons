@@ -1,4 +1,4 @@
-package com.tokyo.dungeons
+package com.tokyo.dungeons.type.serialization
 
 import org.bukkit.configuration.file.FileConfiguration
 

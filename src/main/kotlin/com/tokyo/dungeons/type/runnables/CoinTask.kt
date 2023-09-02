@@ -1,4 +1,4 @@
-package com.tokyo.dungeons.runnables
+package com.tokyo.dungeons.type.runnables
 
 import com.tokyo.dungeons.Dungeons
 import org.bukkit.scheduler.BukkitRunnable

@@ -1,8 +1,8 @@
 package com.tokyo.dungeons.commands
 
 import com.tokyo.dungeons.Dungeons
-import com.tokyo.dungeons.runnables.Spawner
-import com.tokyo.dungeons.managers.DungeonManager
+import com.tokyo.dungeons.type.runnables.Spawner
+import com.tokyo.dungeons.type.managers.DungeonManager
 import com.tokyo.dungeons.toEntityTypeOrElse
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor

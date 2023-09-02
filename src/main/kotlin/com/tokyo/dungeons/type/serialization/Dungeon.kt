@@ -1,6 +1,6 @@
-package com.tokyo.dungeons.serialisation
+package com.tokyo.dungeons.type.serialization
 
-import com.tokyo.dungeons.serialisation.SpawnerLocation.Companion.toSpawnerLocation
+import com.tokyo.dungeons.type.serialization.SpawnerLocation.Companion.toSpawnerLocation
 import org.bukkit.Location
 import org.bukkit.World
 import org.bukkit.entity.EntityType

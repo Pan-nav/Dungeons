@@ -1,4 +1,4 @@
-package com.tokyo.dungeons.serialisation
+package com.tokyo.dungeons.type.serialization
 
 import com.tokyo.dungeons.pow
 import org.bukkit.Location

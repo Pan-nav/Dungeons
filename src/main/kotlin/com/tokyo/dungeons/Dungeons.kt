@@ -1,10 +1,10 @@
 package com.tokyo.dungeons
 
 import com.tokyo.dungeons.commands.DungeonsCmd
-import com.tokyo.dungeons.database.MySQL
-import com.tokyo.dungeons.events.EntityKill
-import com.tokyo.dungeons.managers.Config
-import com.tokyo.dungeons.managers.DungeonManager
+import com.tokyo.dungeons.type.data.MySQL
+import com.tokyo.dungeons.listener.EntityDeathEvent
+import com.tokyo.dungeons.type.managers.Config
+import com.tokyo.dungeons.type.managers.DungeonManager
 import org.bukkit.Bukkit
 import org.bukkit.NamespacedKey
 import org.bukkit.event.Listener
@@ -30,7 +30,10 @@ class Dungeons : JavaPlugin() {
 
         getCommand("dungeons")?.setExecutor(DungeonsCmd())
 
-        EntityKill().register()
+        register(
+            this,
+            EntityDeathEvent(),
+        )
 
         key = NamespacedKey(this, "ShardNote")
     }
@@ -39,10 +42,13 @@ class Dungeons : JavaPlugin() {
         database.disconnect()
     }
 
-    private fun database(){
+    private fun database() {
         run { database.connect() }
         database.loadCoins()
     }
+
+    private fun register(plugin: JavaPlugin, vararg listeners: Listener) = listeners
+        .forEach { listener -> Bukkit.getPluginManager().registerEvents(listener, plugin) }
 
     private fun Listener.register() = Bukkit.getPluginManager().registerEvents(this, this@Dungeons)
 

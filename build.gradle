@@ -16,11 +16,21 @@ repositories {
         name = "sonatype"
         url = "https://oss.sonatype.org/content/groups/public/"
     }
+    maven {
+        url = "https://repo.flyte.gg/releases"
+    }
+
+    maven {
+        url = "https://jitpack.io"
+    }
 }
 
 dependencies {
     compileOnly "io.papermc.paper:paper-api:1.20.1-R0.1-SNAPSHOT"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    implementation("com.github.SuperGlueLib:SuperFoundations:c972db1820")
+
+    implementation("gg.flyte:twilight:1.0.7")
 }
 
 def targetJavaVersion = 17

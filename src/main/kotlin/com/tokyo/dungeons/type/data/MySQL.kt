@@ -1,7 +1,7 @@
-package com.tokyo.dungeons.database
+package com.tokyo.dungeons.type.data
 
 import com.tokyo.dungeons.Dungeons
-import com.tokyo.dungeons.managers.ConfigManager
+import com.tokyo.dungeons.type.managers.ConfigManager
 import com.tokyo.dungeons.toUniqueId
 import org.bukkit.Bukkit
 import java.sql.Connection

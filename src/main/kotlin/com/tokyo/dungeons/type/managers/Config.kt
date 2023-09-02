@@ -1,7 +1,7 @@
-package com.tokyo.dungeons.managers
+package com.tokyo.dungeons.type.managers
 
 import com.tokyo.dungeons.Dungeons
-import com.tokyo.dungeons.MySQL
+import com.tokyo.dungeons.type.serialization.MySQL
 import org.bukkit.configuration.file.FileConfiguration
 
 object Config {

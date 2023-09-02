@@ -1,8 +1,8 @@
-package com.tokyo.dungeons.events
+package com.tokyo.dungeons.listener
 
 import com.tokyo.dungeons.Dungeons
-import com.tokyo.dungeons.managers.ConfigManager
 import com.tokyo.dungeons.toWorld
+import com.tokyo.dungeons.type.managers.Config
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
@@ -14,13 +14,13 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.persistence.PersistentDataType
 import kotlin.random.Random
 
-class EntityKill : Listener {
+class EntityDeathEvent : Listener {
 
     private val coinCache = Dungeons.coinCache
 
     @EventHandler
-    fun onKill(e: EntityDeathEvent){
-        if (e.entity.world != ConfigManager.getDungeonsWorld()!!.toWorld()) return
+    fun onEntityDeath(e: EntityDeathEvent){
+        if (e.entity.world != Config.dungeonWorld!!.toWorld()) return
 
         val player = e.entity.killer
 
