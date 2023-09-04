@@ -1,8 +1,8 @@
-package com.tokyo.dungeons.events
+package com.tokyo.dungeons.listener
 
 import com.tokyo.dungeons.Dungeons
-import com.tokyo.dungeons.managers.ConfigManager
-import com.tokyo.dungeons.toWorld
+import com.tokyo.dungeons.managers.Config
+import com.tokyo.dungeons.util.toWorld
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
@@ -20,7 +20,7 @@ class EntityKill : Listener {
 
     @EventHandler
     fun onKill(e: EntityDeathEvent){
-        if (e.entity.world != ConfigManager.getDungeonsWorld()!!.toWorld()) return
+        if (e.entity.world != Config.dungeonWorld!!.toWorld()) return
 
         val player = e.entity.killer
 

@@ -1,18 +1,19 @@
 package com.tokyo.dungeons.database
 
 import com.tokyo.dungeons.Dungeons
-import com.tokyo.dungeons.managers.ConfigManager
-import com.tokyo.dungeons.toUniqueId
+import com.tokyo.dungeons.managers.Config
+import com.tokyo.dungeons.util.toUniqueId
 import org.bukkit.Bukkit
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.SQLException
+import java.util.UUID
 
 object MySQL {
 
     private var database: MySQL? = null
     private var connection: Connection? = null
-    private val mySQL = ConfigManager.mySQL
+    private val mySQL = Config.mySQL
     private val coinCache = Dungeons.coinCache
     @Throws(SQLException::class)
     fun connect() {
@@ -61,22 +62,23 @@ object MySQL {
     }
 
 
-    fun loadCoins(){
-        val query : String = "SELECT UUID, Coins FROM Profiles"
-        run {
-            val statement = connection!!.createStatement()
-            val rs = statement.executeQuery(query)
+    fun loadCoins(uuid: String){
+        val query : String = "SELECT Coins FROM Profiles WHERE UUID = ?"
 
-            while(rs.next()){
-                val uuid = rs.getString("UUID")
-                val coins = rs.getInt("Coins")
-                coinCache[uuid.toUniqueId()] = coins
-            }
+        val preparedStatement = connection!!.prepareStatement(query)
+        preparedStatement.setString(1, uuid)
+
+        val rs = preparedStatement.executeQuery()
+        while(rs.next()){
+            val coins = rs.getInt("Coins")
+            coinCache[uuid.toUniqueId()] = coins
         }
     }
 
     @Throws(SQLException::class)
-    fun updateCoins(uuid: String, coins: Int){
+    fun updateCoins(uuid: UUID){
+
+        val coins = coinCache.getValue(uuid)
 
         Bukkit.getScheduler().runTaskAsynchronously(Dungeons.instance, Runnable {
             val query = """
@@ -85,13 +87,13 @@ object MySQL {
                              ON DUPLICATE KEY UPDATE
                              Coins = ?
                              """.trimIndent()
-            run {
+
                 val statement = connection!!.prepareStatement(query)
-                statement.setString(1, uuid)
+                statement.setString(1, uuid.toString())
                 statement.setInt(2, coins)
                 statement.setInt(3, coins)
                 statement.executeUpdate()
-            }
+
         })
     }
 

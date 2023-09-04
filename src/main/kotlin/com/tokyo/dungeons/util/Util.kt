@@ -1,4 +1,4 @@
-package com.tokyo.dungeons
+package com.tokyo.dungeons.util
 
 import com.google.gson.GsonBuilder
 import org.bukkit.Bukkit

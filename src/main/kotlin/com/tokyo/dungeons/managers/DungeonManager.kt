@@ -1,10 +1,8 @@
 package com.tokyo.dungeons.managers
 
-import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
-import com.google.gson.reflect.TypeToken
 import com.tokyo.dungeons.Dungeons
-import com.tokyo.dungeons.GSON
+import com.tokyo.dungeons.util.GSON
 import com.tokyo.dungeons.serialisation.Dungeon
 import java.io.File
 

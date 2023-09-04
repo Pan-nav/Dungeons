@@ -20,5 +20,5 @@ data class Dungeon(
         .minBy { it.getDistanceSquared(location) }
         .takeIf { it.getDistanceSquared(location) <= (max * max) }
 
-    fun addSpawner(location: Location, type: EntityType) = spawnPositions.add(location.toSpawnerLocation(type))
+    fun addSpawner(location: Location, type: EntityType, ability: String, probability: Int) = spawnPositions.add(location.toSpawnerLocation(type))
 }
